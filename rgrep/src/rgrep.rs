@@ -1,24 +1,50 @@
-use std::{error::Error, fs};
+use std::{
+    error::Error,
+    fs::File,
+    io::{BufRead, BufReader},
+};
 
 use colored::Colorize;
+use regex::RegexBuilder;
 
-use crate::{config::Config, highlight_query, search};
+use crate::config::Config;
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let content = fs::read_to_string(&config.path)?;
+    let file = File::open(&config.path)?;
+    let reader = BufReader::new(file);
 
-    if content.is_empty() {
-        println!("{}", "File is empty.".yellow());
-        return Ok(());
+    let regex = RegexBuilder::new(&regex::escape(&config.query))
+        .case_insensitive(config.ignore_case)
+        .build()?;
+
+    let mut found = false;
+
+    for (line_number, line) in reader.lines().enumerate() {
+        let line = line?;
+
+        if regex.is_match(&line) {
+            found = true;
+
+            let highlighted = regex
+                .replace_all(&line, |caps: &regex::Captures| {
+                    caps[0].red().bold().to_string()
+                })
+                .into_owned();
+
+            if config.line_numbers {
+                println!(
+                    "{}:{}",
+                    (line_number + 1).to_string().bright_blue().bold(),
+                    highlighted
+                );
+            } else {
+                println!("{highlighted}");
+            }
+        }
     }
 
-    let results = search(&config.query, &content, config.ignore_case)?
-        .into_iter()
-        .map(|line| highlight_query(line, &config.query, config.ignore_case))
-        .collect::<Result<Vec<_>, _>>()?;
-
-    for line in results {
-        println!("{line}");
+    if !found {
+        println!("{}", "No matches found".yellow());
     }
 
     Ok(())
