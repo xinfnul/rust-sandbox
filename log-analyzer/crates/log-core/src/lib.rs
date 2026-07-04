@@ -139,6 +139,10 @@ pub trait Analyzer {
     fn analyze(&self, entries: &[LogEntry]) -> Report;
 }
 
+pub trait Generator {
+    fn generate(&mut self, count: usize) -> Vec<LogEntry>;
+}
+
 // STATISTICS/ REPORT
 // ------------------
 #[derive(Debug, Clone)]
