@@ -59,7 +59,7 @@ impl FakeLogGenerator {
     fn generate_one(&mut self) -> LogEntry {
         let mut rng = rand::rng();
 
-        let delta = Duration::seconds(rng.random_range(60..=300));
+        let delta = Duration::seconds(rng.random_range(10_000..=11_400));
         self.clock -= delta;
 
         let level = LogLevel::ALL[rng.random_range(0..LogLevel::ALL.len())];
