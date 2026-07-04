@@ -1,0 +1,8 @@
+[workspace]
+resolver = "2"
+
+members = [
+	"crates/log-core",
+	"crates/fake-log-generator",
+	"crates/log-analyzer",
+]
