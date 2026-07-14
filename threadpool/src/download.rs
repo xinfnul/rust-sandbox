@@ -1,6 +1,6 @@
 use std::{
     fs::File,
-    io::{self, Write},
+    io::{self, BufWriter},
     path::Path,
 };
 
@@ -45,7 +45,7 @@ impl From<io::Error> for DownloadError {
 }
 
 pub fn download_image(client: &Client, url: &str, output: &Path) -> Result<(), DownloadError> {
-    let response = client.get(url).send()?;
+    let mut response = client.get(url).send()?;
 
     if !response.status().is_success() {
         return Err(DownloadError::InvalidStatus {
@@ -54,10 +54,10 @@ pub fn download_image(client: &Client, url: &str, output: &Path) -> Result<(), D
         });
     }
 
-    let bytes = response.bytes()?;
+    let file = File::create(output)?;
+    let mut writer = BufWriter::new(file);
 
-    let mut file = File::create(output)?;
-    file.write_all(&bytes)?;
+    std::io::copy(&mut response, &mut writer)?;
 
     Ok(())
 }
