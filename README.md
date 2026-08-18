@@ -15,6 +15,8 @@ A personal sandbox for learning and exploring Rust — built incrementally as I 
 | [`rgrep`](./rgrep/)                           | Minimal `grep` clone for searching text using regular expressions |
 | [`markdown`](./markdown/)                     | Simple Markdown parser and renderer                               |
 | [`log-analyzer`](./log-analyzer/)             | CLI tool for parsing and analyzing log files                      |
+| [`threadpool`](./threadpool/)                 | Threadpool implementation with concurrent image downloader        |
+| [`async-rust`](./async-rust/)                 | Async image downloader with Rust async/await and an async runtime|
 
 ---
 
@@ -27,6 +29,8 @@ rust-sandbox/
 ├── rgrep/               # grep-like search tool
 ├── markdown/            # markdown parser
 ├── log-analyzer/        # log parsing and analysis ( cargo workspaces )
+├── threadpool/          # thread-based concurrent image downloader
+├── async-rust/          # async concurrent image downloader
 └── README.md            # you are here
 ```
 
