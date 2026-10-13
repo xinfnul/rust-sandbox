@@ -16,7 +16,8 @@ A personal sandbox for learning and exploring Rust — built incrementally as I 
 | [`markdown`](./markdown/)                     | Simple Markdown parser and renderer                               |
 | [`log-analyzer`](./log-analyzer/)             | CLI tool for parsing and analyzing log files                      |
 | [`threadpool`](./threadpool/)                 | Threadpool implementation with concurrent image downloader        |
-| [`async-rust`](./async-rust/)                 | Async image downloader with Rust async/await and an async runtime|
+| [`async-rust`](./async-rust/)                 | Async image downloader with Rust async/await and an async runtime |
+| [`axum-todo`](./axum-todo/)                   | Axum todo REST API                                                     |
 
 ---
 
@@ -31,6 +32,7 @@ rust-sandbox/
 ├── log-analyzer/        # log parsing and analysis ( cargo workspaces )
 ├── threadpool/          # thread-based concurrent image downloader
 ├── async-rust/          # async concurrent image downloader
+├── axum-todo/           # axum todo rest api
 └── README.md            # you are here
 ```
 
